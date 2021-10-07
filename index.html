@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./dist/css/main.css" />
+    <script src="./src/js/app.js" async defer></script>
     <title>ToDo</title>
   </head>
   <body>
@@ -12,7 +13,7 @@
       <label for="task" class="tasks__lbl">Todos</label>
       <input type="text" id="task" class="tasks__input" />
       <ul class="tasks__list">
-        <li class="tasks__item task">
+        <!-- <li class="tasks__item task">
           <span class="task__status task__status--completed"></span>
           <span class="task__title">dupaaaaaaaaa</span>
           <span class="task__remove"></span>
@@ -21,19 +22,19 @@
           <span class="task__status"></span>
           <span class="task__title">dupaaaaaaaa2</span>
           <span class="task__remove"></span>
-        </li>
+        </li> -->
       </ul>
       <nav class="tasks__filter filter">
         <span class="filter__counter" id="counterTasks"> 2 items left</span>
-        <a href="" class="filter__btn" id="allTasks">all</a>
-        <a href="" class="filter__btn" id="acvtiveTasks">active</a>
-        <a href="" class="filter__btn" id="completedTasks">completed</a>
+        <a class="filter__btn" id="allTasks">all</a>
+        <a class="filter__btn" id="activeTasks">active</a>
+        <a class="filter__btn" id="completedTasks">completed</a>
       </nav>
     </div>
     <li class="tasks__item task hidden clone">
       <span class="task__status"></span>
       <span class="task__title">Learn JS</span>
-      <span class="task__removeIcon"></span>
+      <span class="task__remove"></span>
     </li>
   </body>
 </html>
