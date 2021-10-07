@@ -1,0 +1,23 @@
+{
+  "name": "todo",
+  "version": "1.0.0",
+  "description": "todo app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "sass ./src/scss/main.scss ./dist/css/main.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/remigiuszpulit/ToDoApp.git"
+  },
+  "author": "Remigiusz Pulit",
+  "license": "Beerware",
+  "bugs": {
+    "url": "https://github.com/remigiuszpulit/ToDoApp/issues"
+  },
+  "homepage": "https://github.com/remigiuszpulit/ToDoApp#readme",
+  "dependencies": {
+    "sass": "^1.42.1"
+  }
+}
