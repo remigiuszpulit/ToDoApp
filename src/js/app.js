@@ -4,46 +4,44 @@ import { loadFromLocalStorage, saveToLocalStorage } from "./storage.js";
 import getNextID from "./helpers.js";
 import { createInterface } from "./generateHTML.js";
 import { createTask } from "./generateHTML.js";
+import { getState } from "./state.js";
+import {
+  add as add_to_state,
+  remove as remove_from_state,
+  changeStatus as changeStatusState,
+  calculateNotCompletedTasks,
+} from "./state.js";
 
-const state = [];
-
-const reloadAllTasks = (tasks, comit = true) => {
+const reloadAllTasks = (tasks = getState(), comit = true) => {
   document.querySelectorAll(".tasks__item").forEach((t) => t.remove());
-  calculateLeftItems(state);
+  calculateLeftItems(getState());
 
   tasks.forEach((task) => {
-    const html = createTask(task, tasks, changeStatus, removeTask);
+    const html = createTask(task, changeStatus, removeTask);
     document.querySelector(".tasks__list").appendChild(html);
   });
   if (comit) {
-    saveToLocalStorage(tasks);
+    saveToLocalStorage();
   }
 };
 
-const changeStatus = (id, data) => {
-  data.forEach((task) => {
-    if (task.id == id) {
-      task.status = !task.status;
-    }
-  });
-  reloadAllTasks(data);
+const changeStatus = (id) => {
+  changeStatusState(id);
+  reloadAllTasks();
 };
 
-const removeTask = (id, data) => {
-  const task = data.filter((t) => t.id === id)[0];
-  const task_id = data.indexOf(task);
-  data.splice(task_id, 1);
+const removeTask = (id) => {
+  remove_from_state(id);
 
-  reloadAllTasks(data);
+  reloadAllTasks();
 
-  calculateLeftItems(state);
+  calculateLeftItems();
 };
 
-function calculateLeftItems(data) {
-  const notCompleted = data.filter((task) => task.status);
+function calculateLeftItems() {
   document.querySelector(
     "#counterTasks"
-  ).innerText = `${notCompleted.length} items left`;
+  ).innerText = `${calculateNotCompletedTasks()} items left`;
 }
 
 const handleInput = (evt) => {
@@ -52,18 +50,18 @@ const handleInput = (evt) => {
     const task = {
       title: evt.target.value,
       status: true,
-      id: getNextID(state),
+      id: getNextID(getState()),
     };
 
-    state.push(task);
-    reloadAllTasks(state);
+    add_to_state(task);
+    reloadAllTasks();
 
     evt.target.value = "";
   }
 };
 
-loadFromLocalStorage(state);
+loadFromLocalStorage();
 
 document.body.appendChild(
-  createInterface(state, handleInput, changeStatus, removeTask, reloadAllTasks)
+  createInterface(handleInput, changeStatus, removeTask, reloadAllTasks)
 );

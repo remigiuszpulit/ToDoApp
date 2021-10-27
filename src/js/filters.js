@@ -1,23 +1,24 @@
+import { getCompletedTasks, getNotCompletedTasks, getState } from "./state.js";
+
 export const removeFilterActive = (navRef) => {
   navRef.querySelectorAll(".filter__btn").forEach((btn) => {
     btn.classList.remove("filter__btn--active");
   });
 };
 
-export const filterTasks = (evt, state, navRef, reloadAllTasks) => {
-  let tasks = [];
+export const filterTasks = (evt, navRef, reloadAllTasks) => {
   removeFilterActive(navRef);
   evt.target.classList.add("filter__btn--active");
+  const state = getState();
   switch (evt.target.id) {
     case "completedTasks":
-      tasks = tasks = state.filter((task) => !task.status);
+      reloadAllTasks(getCompletedTasks(), false);
+
       break;
     case "activeTasks":
-      tasks = state.filter((task) => task.status);
+      reloadAllTasks(getNotCompletedTasks(), false);
       break;
     default:
-      tasks = state;
+      reloadAllTasks(getState(), false);
   }
-
-  reloadAllTasks(tasks, false);
 };
